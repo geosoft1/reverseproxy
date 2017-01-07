@@ -1,0 +1,12 @@
+{
+	"ip":"",
+	"port":"8080",
+	"routes":{
+		"/upload":"192.168.88.160:8080",
+		"#/files/":"192.168.88.160:8080",
+		"/Downloads/":"192.168.88.164:8000",
+		"/img":"192.168.88.161:8081",
+		"#":"the pattern / matches all paths not matched by other registered patterns",
+		"/":"192.168.88.161"
+	}
+}
