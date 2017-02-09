@@ -1,5 +1,7 @@
 reverseproxy
 ====
+[![version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/geosoft1/reverseproxy/archive/master.zip)
+[![license](https://img.shields.io/badge/license-gpl-blue.svg)](https://github.com/geosoft1/reverseproxy/blob/master/LICENSE)
 
 Simple [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) server. Useful for accessing web applications on various servers (or VMs) through a single domain.
 
