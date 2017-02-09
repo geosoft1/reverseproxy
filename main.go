@@ -56,7 +56,7 @@ func main() {
 	}
 
 	log.Print("load configuration")
-	f, err := os.Open(pwd + "/conf.json")
+	f, err := os.Open(filepath.ToSlash(pwd + "/conf.json"))
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -67,13 +67,11 @@ func main() {
 	}
 
 	log.Print("init routes")
-	count := 1
 	for Path, Target := range Config["routes"].(map[string]interface{}) {
 		// avoid add comments as route
 		if Path != "#" {
 			http.HandleFunc(Path, Handle(NewReverseProxy(Target.(string))))
-			log.Printf("r%d %s > %s", count, Path, Target)
-			count++
+			log.Printf("%s > %s", Path, Target)
 		}
 	}
 
