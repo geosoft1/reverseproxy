@@ -46,7 +46,7 @@ The reverse proxy add your path to the target, so be prepared to handle this pat
 
 Use `/` path for main site which have index page on `/`. Use sufixes for other web services which have the sufix as main page.
 
-Remeber that a route like `/name/` mean match any starting with `name` (eg. `/api/` match also `/api/bla` and so on)
+Remeber that a route like `/name/` mean match any starting with `name` (eg. `/api/` match also `/api/bla` and so on).
 
 Do not repeat the routes because the server will take always tha last route to a target.
 
