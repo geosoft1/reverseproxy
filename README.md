@@ -7,6 +7,8 @@ Simple [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) server. Usef
 
 ## How it works?
 
+![reverseproxy](https://user-images.githubusercontent.com/6298396/36028867-5e549ea4-0da9-11e8-8ecf-62546e95ca5c.png)
+
 Just complete the `conf.json` file and run the server. Example:
 
      {
