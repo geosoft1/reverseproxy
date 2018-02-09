@@ -5,7 +5,7 @@ reverseproxy
 
 Simple [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) server. Useful for accessing web applications on various servers (or VMs) through a single domain.
 
-## How it works?
+### How it works?
 
 ![reverseproxy](https://user-images.githubusercontent.com/6298396/36028867-5e549ea4-0da9-11e8-8ecf-62546e95ca5c.png)
 
