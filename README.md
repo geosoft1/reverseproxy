@@ -37,25 +37,25 @@ or for HTTPS
 
 	go build https.go
 
-Parameters
+### Parameters
 
-### `-conf`
+#### `-conf`
 
 Start program with a certain configuration file. Default `conf.json`.
 
-### `-http`
+#### `-http`
 
 Listening address and port for HTTP server. Default `:8080`.
 
-### `-https`
+#### `-https`
 
 Listening address and port for HTTPS server. Default `:8090`.
 
-### `-https-enabled`
+#### `-https-enabled`
 
 Enable HTTPS server. Default `false`.
 
-### `-verbose`
+#### `-verbose`
 
 Enable verbose mode for middleware.
 
