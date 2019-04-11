@@ -1,4 +1,4 @@
-// simple reverse proxy
+// simple http reverse proxy
 // Copyright (C) 2017-2019  geosoft1  geosoft1@gmail.com
 //
 // This program is free software: you can redistribute it and/or modify
@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// +build http
+
 package main
 
 import (
-	"crypto/tls"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -32,8 +33,6 @@ import (
 
 var configFile = flag.String("conf", "conf.json", "configuration file")
 var httpAddress = flag.String("http", ":8080", "http address")
-var httpsAddress = flag.String("https", ":8090", "https address")
-var httpsEnabled = flag.Bool("https-enabled", false, "enable https server")
 var verbose = flag.Bool("verbose", false, "explain what is being done")
 
 var config map[string]interface{}
@@ -90,23 +89,7 @@ func main() {
 			log.Println(err)
 			continue
 		}
-		if u.Scheme == "https" && !*httpsEnabled {
-			log.Println("https scheme detected but server is not enabled, run with -https-enabled")
-			continue
-		}
 		http.HandleFunc(path, Register(NewReverseProxy(u.Scheme, u.Host)))
-	}
-
-	if *httpsEnabled {
-		go func() {
-			// allow you to use self signed certificates
-			http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
-			// openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt
-			log.Printf("start https server on %s", *httpsAddress)
-			if err := http.ListenAndServeTLS(*httpsAddress, filepath.Join(folder, "server.crt"), filepath.Join(folder, "server.key"), nil); err != nil {
-				log.Fatalln(err)
-			}
-		}()
 	}
 
 	log.Printf("start http server on %s", *httpAddress)

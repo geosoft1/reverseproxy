@@ -1,54 +1,95 @@
 reverseproxy
 ====
-[![version](https://img.shields.io/badge/version-1.0.1-blue.svg)](https://github.com/geosoft1/reverseproxy/archive/master.zip)
+[![version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/geosoft1/reverseproxy/archive/master.zip)
 [![license](https://img.shields.io/badge/license-gpl-blue.svg)](https://github.com/geosoft1/reverseproxy/blob/master/LICENSE)
 
 Simple [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) server. Useful for accessing web applications on various servers (or VMs) through a single domain.
 
-### How it works?
+## How it works?
 
 ![reverseproxy](https://user-images.githubusercontent.com/6298396/36028867-5e549ea4-0da9-11e8-8ecf-62546e95ca5c.png)
 
 Just complete the `conf.json` file and run the server. Example:
 
-     {
-         "ip":"",
-         "port":"8080",
-         "routes":{
-		     "/upload":"192.168.88.160:8080",
-     	     "/Downloads/":"192.168.88.164:8000",
-     	     "#":"the pattern / matches all paths not matched by other registered patterns",
-     	     "/":"192.168.88.161"
-         }
-     }
+	{
+	    "routes": {
+	        "#": "the pattern / matches all paths not matched by other registered patterns",
+	        "/": "http://192.168.88.250",
+	        "/wrong": "192.168.88.250:8080",
+	        "/upload": "http://192.168.88.250:8080",
+	        "/hello": "https://192.168.88.250:8090",
+	        "/static/": "http://192.168.88.250:8080",
+	        "#/disabled": "192.168.88.250:8080"
+	    }
+	}
 
-## Configuration details
+## Getting started
 
-     "ip":"",
+To compile the reverse proxy server use
 
-No ip mean `localhost` on hosting server. Is no need to change this.
+	go build
 
-     "port":"8080",
+If you still want just an HTTP reverse proxy, compile with
 
-The server listening on this port. Remeber to forward the port `80` to this port if your connection pass through a router. No root right are required if you run on big ports (eg. `8080`).
+	go build http.go
+
+or for HTTPS
+
+	go build https.go
+
+Parameters
+
+### `-conf`
+
+Start program with a certain configuration file. Default `conf.json`.
+
+### `-http`
+
+Listening address and port for HTTP server. Default `:8080`.
+
+### `-https`
+
+Listening address and port for HTTPS server. Default `:8090`.
+
+### `-https-enabled`
+
+Enable HTTPS server. Default `false`.
+
+### `-verbose`
+
+Enable verbose mode for middleware.
 
 ## Routes
 
 Routes has the folowing structure
 
-     "path":"target"
+     "path":"host"
 
-The path is what you request and the target is what you get (eg. if your domain is `example.com` then `/` mean `example.com/` and `/upload` mean `example.com/upload`).
+The path is what you request and the host is what you get. The reverse proxy always add the path to the host (eg. if your host address is `example.com` then the path `/` mean `example.com/` and `/upload` mean `example.com/upload`). 
 
-`#` path mean a comment and is not added to routes. Put the text in target. `#something` don't mean a comment.
+Paths starting with `#` are comments and are not added to routes.
 
-The reverse proxy add your path to the target, so be prepared to handle this path. For example the folowing will get an error page.
+A path like `/name/` match any request starting with `name` (eg. `/api/` match also `/api/bla` and so on).
 
-     "/upload":"google.com"
+Hosts must be a complete url address and port.
 
-Use `/` path for main site which have index page on `/`. Use sufixes for other web services which have the sufix as main page.
+Do not repeat the routes because the server will take always the last route to a host.
 
-Remeber that a route like `/name/` mean match any starting with `name` (eg. `/api/` match also `/api/bla` and so on).
+## Testing the server
 
-Do not repeat the routes because the server will take always the last route to a target.
+	curl --verbose http://localhost:8080/hello
 
+For HTTPS use
+
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt
+	curl --insecure --verbose https://localhost:8090/hello
+
+## Faq
+
+### Why the HTTPS is not enabled by default?
+
+HTTPS server need some valid certificates which you may not have. If you need only a HTTP server is no reason to generate cerificates just to run the program.
+
+### Should I use http or https in the host address?
+
+Yes, prefixes are mandatory to tell the server in which chain to put the route. Omitting that will skip the route.

@@ -1,12 +1,11 @@
 {
-	"ip":"",
-	"port":"8080",
-	"routes":{
-		"/upload":"192.168.88.160:8080",
-		"#/files/":"192.168.88.160:8080",
-		"/Downloads/":"192.168.88.164:8000",
-		"/img":"192.168.88.161:8081",
-		"#":"the pattern / matches all paths not matched by other registered patterns",
-		"/":"192.168.88.161"
-	}
+    "routes": {
+        "#": "the pattern / matches all paths not matched by other registered patterns",
+        "/": "http://192.168.88.250",
+        "/wrong": "192.168.88.250:8080",
+        "/upload": "http://192.168.88.250:8080",
+        "/hello": "https://192.168.88.250:8090",
+        "/static/": "http://192.168.88.250:8080",
+        "#/disabled": "192.168.88.250:8080"
+    }
 }
