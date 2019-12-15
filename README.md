@@ -1,6 +1,6 @@
 reverseproxy
 ====
-[![version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/geosoft1/reverseproxy/archive/master.zip)
+[![version](https://img.shields.io/badge/version-2.0.1-blue.svg)](https://github.com/geosoft1/reverseproxy/archive/master.zip)
 [![license](https://img.shields.io/badge/license-gpl-blue.svg)](https://github.com/geosoft1/reverseproxy/blob/master/LICENSE)
 
 Simple [reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy) server. Useful for accessing web applications on various servers (or VMs) through a single domain.
@@ -37,27 +37,17 @@ or for HTTPS
 
 	go build https.go
 
-### Parameters
+Note that `Register` function (see [main.go](https://github.com/geosoft1/reverseproxy/blob/d5dce6d78fb666405cead40cf0c14fb7278f620a/main.go#L48), [http.go](https://github.com/geosoft1/reverseproxy/blob/d5dce6d78fb666405cead40cf0c14fb7278f620a/http.go#L47) and [https.go](https://github.com/geosoft1/reverseproxy/blob/d5dce6d78fb666405cead40cf0c14fb7278f620a/https.go#L48)) have some headers commented. Change as you wish for dealing with applications which need [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing).
 
-#### `-conf`
+## Parameters
 
-Start program with a certain configuration file. Default `conf.json`.
-
-#### `-http`
-
-Listening address and port for HTTP server. Default `:8080`.
-
-#### `-https`
-
-Listening address and port for HTTPS server. Default `:8090`.
-
-#### `-https-enabled`
-
-Enable HTTPS server. Default `false`.
-
-#### `-verbose`
-
-Enable verbose mode for middleware.
+Name|Description
+---|---
+`-conf`|Cache file name, default value `cache.json`.
+`-http`|Listening address and port for HTTP server, default value `8080`.
+`-https`|Listening address and port for HTTPS server, default value `8090`.
+`-https-enabled`|Enable HTTPS server. Default `false`.
+`-verbose`|Enable verbose mode for middleware.
 
 ## Routes
 

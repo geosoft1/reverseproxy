@@ -50,8 +50,8 @@ func Register(p *httputil.ReverseProxy) func(http.ResponseWriter, *http.Request)
 		if *verbose {
 			log.Printf("request %s%s", r.RemoteAddr, r.RequestURI)
 		}
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With")
+		// w.Header().Set("Access-Control-Allow-Origin", "*")
+		// w.Header().Set("Access-Control-Allow-Headers", "X-Requested-With")
 		p.ServeHTTP(w, r)
 	}
 }

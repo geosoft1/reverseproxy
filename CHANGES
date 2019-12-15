@@ -1,6 +1,8 @@
-1.0.1
-- some minor bugs corrections
-
+1.0.0
+- initial release
 2.0.0
 - code rewritten
 - https server added
+2.0.1
+- make headers optional in Register function
+- some small corrections in documentation
